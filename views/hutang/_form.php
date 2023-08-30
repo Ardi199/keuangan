@@ -6,7 +6,7 @@ use kartik\file\FileInput;
 use kartik\select2\Select2;
 
 $form = ActiveForm::begin([
-    'action' => ['hutang/create'],
+    'action' => $model->isNewRecord ? ['hutang/create'] : ['hutang/update','id' => $model->ID],
     'options' => [
         'enableAjaxValidation' => true,
         'enctype' => 'multipart/form-data'
@@ -29,11 +29,25 @@ $form = ActiveForm::begin([
     ]); ?>
 
     <?= $form->field($model, 'BUKTI')->widget(FileInput::classname(), [
-        'options' => ['accept' => 'image/*'],
+        'options' => [
+            'accept' => 'image/*',
+            'id' => $model->isNewRecord ? 'create-berkas' : 'update-berkas',
+        ],
+        'pluginOptions' => [
+           'autoReplace'=>true,
+           'showUpload' => false,
+           'showRemove' => false,
+           'required'=> true,
+           'validateInitialCount'=>true,
+           'overwriteInitial'=>false,
+           'initialPreview'=> empty($model->BUKTI) ? false : 'files/hutang/'.$model->BUKTI,
+           'initialPreviewAsData'=>true,
+           'allowedFileExtensions'=>['png','jpg','jpeg','pdf'],
+       ]
     ]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

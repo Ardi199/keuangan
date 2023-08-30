@@ -26,7 +26,10 @@
         "rmrevin/yii2-fontawesome": "~2.9",
         "kartik-v/yii2-widget-fileinput": "dev-master",
         "kartik-v/yii2-widget-select2": "dev-master",
-        "kartik-v/yii2-widget-datetimepicker": "dev-master"
+        "kartik-v/yii2-widget-datetimepicker": "dev-master",
+        "kartik-v/yii2-editable": "dev-master",
+        "sizeg/yii2-jwt": "^1.2",
+        "lcobucci/jwt": "3.2.x-dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

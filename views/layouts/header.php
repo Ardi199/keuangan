@@ -23,7 +23,7 @@ use yii\helpers\Html;
             <ul class="nav navbar-nav">
                 <li class="dropdown user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="hidden-xs"><i class="glyphicon glyphicon-user"></i> <?= Yii::$app->user->identity->nama_pengguna ?></span>
+                        <span class="hidden-xs"><i class="glyphicon glyphicon-user"></i> <?= isset(Yii::$app->user->identity->NAMA_PENGGUNA) ? Yii::$app->user->identity->NAMA_PENGGUNA : 'Pengunjung' ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- Menu Footer-->

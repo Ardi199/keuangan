@@ -14,6 +14,7 @@ $config = [
     ],
     'components' => [
         'request' => [
+            'enableCsrfValidation' => false,
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'KioA8aMMPFECw9eir5Sq0pP_G7SLf73r',
         ],
@@ -21,7 +22,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\DataPengguna',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -49,6 +50,11 @@ $config = [
                     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
                 ],
             ],
+        ],
+        'jwt' => [
+            'class' => \sizeg\jwt\Jwt::class,
+            'key' => 'SECRET-KEY',  //typically a long random string
+            'jwtValidationData' => \app\components\JwtValidationData::class,
         ],
     //     'view' => [
     //         'theme' => [

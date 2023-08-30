@@ -6,16 +6,17 @@ use yii\helpers\Html;
 /** @var app\models\Hutang $model */
 
 $this->title = 'Update Hutang: ' . $model->ID;
-$this->params['breadcrumbs'][] = ['label' => 'Hutangs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->ID, 'url' => ['view', 'ID' => $model->ID]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="hutang-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <div class="box box-info">
+        <div class="box-body">
+            <h3><?= Html::encode($this->title) ?></h3>
+            <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
+        </div>
+    </div>
 
 </div>

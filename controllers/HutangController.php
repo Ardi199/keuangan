@@ -9,28 +9,33 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use Yii;
+use yii\filters\AccessControl;
 
 /**
  * HutangController implements the CRUD actions for Hutang model.
  */
 class HutangController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        // 'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'create', 'update', 'approval', 'approve'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'update', 'approval', 'approve'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**
@@ -135,7 +140,9 @@ class HutangController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->BUKTI = $this->setFile($model, 'BUKTI');
+            $model->save();
             return $this->redirect(['index']);
         }
 
@@ -231,6 +238,22 @@ class HutangController extends Controller
             endif;
         else :
             return false;
+        endif;
+    }
+
+    protected function setFileOld($model, $attr, $old)
+    {
+        $model->$attr = UploadedFile::getInstance($model, $attr);
+        if (isset($model->$attr->name)) :
+            $model->$attr->name = $attr . '-' . $model->ID . '.' . $model->$attr->extension;
+            return $this->saveFile($model, $attr);
+        elseif ($model->isNewRecord) :
+            $model->$attr = $model->peg->$old->URL;
+            copy('/files/hutang/' . $model->$attr, $model->$attr);
+            return $model->$attr;
+        else :
+            $modelOld = Hutang::findOne($model->ID);
+            return $modelOld->$attr;
         endif;
     }
 }

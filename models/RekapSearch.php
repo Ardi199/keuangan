@@ -5,12 +5,14 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Rekap;
+use Yii;
 
 /**
  * RekapSearch represents the model behind the search form of `app\models\Rekap`.
  */
 class RekapSearch extends Rekap
 {
+    public $gaji;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class RekapSearch extends Rekap
     {
         return [
             [['ID'], 'integer'],
-            [['NOMINAL', 'KETERANGAN', 'CREATED_AT', 'UPDATED_AT', 'HARI', 'TANGGAL'], 'safe'],
+            [['NOMINAL', 'KETERANGAN', 'CREATED_AT', 'UPDATED_AT', 'HARI', 'TANGGAL', 'gaji'], 'safe'],
         ];
     }
 
@@ -41,12 +43,17 @@ class RekapSearch extends Rekap
     public function search($params)
     {
         $query = Rekap::find();
-        $query->orderBy(['TANGGAL' => SORT_DESC]);
+        $query->orderBy(['TANGGAL' => SORT_DESC, 'NOMINAL' => SORT_DESC]);
+        if (isset($this->gaji) and $this->gaji == '1') :
+            $endOfNextMonth = date('Y-08-26');
+            $startOfNextMonth = date('Y-07-26');
+            $query->andWhere(['BETWEEN', 'TANGGAL', $startOfNextMonth, $endOfNextMonth]);
+        endif;
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'pagination' => array('pageSize' => 10),
+            'pagination' => array('pageSize' => 100),
             'query' => $query,
         ]);
 

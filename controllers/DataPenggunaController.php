@@ -2,19 +2,22 @@
 
 namespace app\controllers;
 
-use app\models\Rekap;
-use app\models\RekapSearch;
-use Yii;
+use app\models\DataPengguna;
+use app\models\DataPenggunaSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
- * RekapController implements the CRUD actions for Rekap model.
+ * DataPenggunaController implements the CRUD actions for DataPengguna model.
  */
-class RekapController extends Controller
+class DataPenggunaController extends Controller
 {
+    /**
+     * @inheritDoc
+     */
     public function behaviors()
     {
         return [
@@ -38,75 +41,47 @@ class RekapController extends Controller
     }
 
     /**
-     * Lists all Rekap models.
+     * Lists all DataPengguna models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $model = new Rekap();
-        $searchModel = new RekapSearch();
-        $searchModel->TANGGAL = date('Y-m-d');
+        $searchModel = new DataPenggunaSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
-            'model' => $model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Lists all Rekap models.
-     *
-     * @return string
-     */
-    public function actionIndexBulanan()
-    {
-        $model = new Rekap();
-        $searchModel = new RekapSearch();
-        $searchModel->gaji = '1';
-        $searchModel->TANGGAL = date('Y-m');
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index_bulanan', [
-            'model' => $model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Rekap model.
-     * @param int $ID ID
+     * Displays a single DataPengguna model.
+     * @param int $ID_PENGGUNA Id Pengguna
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($ID)
+    public function actionView($ID_PENGGUNA)
     {
         return $this->render('view', [
-            'model' => $this->findModel($ID),
+            'model' => $this->findModel($ID_PENGGUNA),
         ]);
     }
 
     /**
-     * Creates a new Rekap model.
+     * Creates a new DataPengguna model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Rekap();
+        $model = new DataPengguna();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->TANGGAL = $this->request->post()['Rekap']['TANGGAL'];
-                $model->CREATED_AT = date('Y-m-d h:i:s');
-                $model->HARI = date('l');
                 if ($model->save()) :
-                    Yii::$app->session->setFlash('sukses', "Berhasil Buat Pengeluaran ID: " . $model->ID . " berhasil");
-                else :
-                    Yii::$app->session->setFlash('error', "Buat Pengeluaran ID: " . $model->ID . " tidak berhasil : " . $model->getErrors());
+                    Yii::$app->session->setFlash('sukses', "Berhasil Buat Pengguna ID: " . $model->ID_PENGGUNA . " berhasil");
                 endif;
                 return $this->redirect(['index']);
             }
@@ -120,23 +95,17 @@ class RekapController extends Controller
     }
 
     /**
-     * Updates an existing Rekap model.
+     * Updates an existing DataPengguna model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $ID ID
+     * @param int $ID_PENGGUNA Id Pengguna
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($ID_PENGGUNA)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($ID_PENGGUNA);
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            $model->UPDATED_AT = date('Y-m-d h:i:s');
-            if ($model->save()) :
-                Yii::$app->session->setFlash('sukses', "Berhasil Ubah Pengeluaran ID: " . $model->ID . " berhasil");
-            else :
-                Yii::$app->session->setFlash('error', "Ubah Pengeluaran ID: " . $model->ID . " tidak berhasil : " . $model->getErrors());
-            endif;
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
@@ -146,31 +115,29 @@ class RekapController extends Controller
     }
 
     /**
-     * Deletes an existing Rekap model.
+     * Deletes an existing DataPengguna model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $ID ID
+     * @param int $ID_PENGGUNA Id Pengguna
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($ID_PENGGUNA)
     {
-        $model = $this->findModel($id);
-        $model->delete();
-        Yii::$app->session->setFlash('sukses', "Berhasil Hapus Pengeluaran ID: " . $model->ID . " berhasil");
+        $this->findModel($ID_PENGGUNA)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Rekap model based on its primary key value.
+     * Finds the DataPengguna model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $ID ID
-     * @return Rekap the loaded model
+     * @param int $ID_PENGGUNA Id Pengguna
+     * @return DataPengguna the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($ID_PENGGUNA)
     {
-        if (($model = Rekap::findOne(['ID' => $id])) !== null) {
+        if (($model = DataPengguna::findOne(['ID_PENGGUNA' => $ID_PENGGUNA])) !== null) {
             return $model;
         }
 

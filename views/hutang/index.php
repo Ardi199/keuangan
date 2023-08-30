@@ -21,17 +21,6 @@ if (Yii::$app->session->hasFlash('error')) :
 endif;
 
 Modal::begin([
-    'id' => 'modaluploadhutang',
-    'size' => 'modal-md',
-    'header' => '<h4 id="header">Create</h4>',
-    'headerOptions' => ['class' => 'default-modal'],
-]);
-echo $this->render('create', [
-    'model' => $model,
-]);
-Modal::end();
-
-Modal::begin([
     'id' => 'modalfiledownload',
     'size' => 'modal-xs',
     'options' => ['tabindex' => false],
@@ -83,9 +72,7 @@ $columns =
         [
             'attribute' => 'NOMINAL',
             'headerOptions' => ['style' => 'text-align:center;'],
-            'value' => function ($model) {
-                return number_format($model->NOMINAL,2,',','.');
-            },
+            'format'=>['decimal',2],
             'pageSummary' => true,
         ],
         [
@@ -127,17 +114,17 @@ $columns =
             'contentOptions' => ['style' => 'text-align:center;'],
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a(
-                    '<span class="glyphicon glyphicon-picture"></span>',
-                    '#',
-                    [
-                        'type' => 'button',
-                        'class' => 'btn btn-xs btn-primary',
-                        'data-toggle' => 'modal',
-                        'data-target' => '#modalfiledownload',
-                        'data-whatever' => 'files/hutang/' . $model->BUKTI
-                    ]
-                );
+                    return Html::a(
+                        '<span class="glyphicon glyphicon-picture"></span>',
+                        '#',
+                        [
+                            'type' => 'button',
+                            'class' => 'btn btn-xs btn-primary',
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modalfiledownload',
+                            'data-whatever' => 'files/hutang/' . $model->BUKTI
+                        ]
+                    );
             },
         ],
     ];
@@ -188,3 +175,15 @@ $columns =
     ]); ?>
 
 </div>
+<?php
+Modal::begin([
+    'id'=>'modaluploadhutang',
+    'size'=>'modal-md',
+    'header'=>'<h4 id="header">Create</h4>',
+    'headerOptions' => ['class'=>'default-modal'],
+    ]);
+echo $this->render('create', [
+    'model' => $model,
+]);
+Modal::end();
+?>

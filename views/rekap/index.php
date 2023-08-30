@@ -30,7 +30,7 @@ echo $this->render('create', [
 ]);
 Modal::end();
 
-$this->title = 'Pengeluaran';
+$this->title = 'Pengeluaran Harian';
 
 $columns = 
 [
@@ -71,9 +71,7 @@ $columns =
     [
         'attribute' => 'NOMINAL',
         'headerOptions' => ['style' => 'text-align:center;'],
-        'value' => function($model){
-            return number_format($model->NOMINAL,2,',','.');
-        },
+        'format'=>['decimal',2],
         'pageSummary' => true,
     ],
     [
@@ -83,21 +81,11 @@ $columns =
         'filterWidgetOptions' => [
             'options' => ['id' => 'WAKTU_MASUK-absen'],
             'type' => DatePicker::TYPE_INPUT,
-            'pluginOptions'=>[
+            'pluginOptions' => [
                 'format' => 'yyyy-mm-dd',
                 'autoclose' => true,
-                'todayHighlight' => true,
-            ],
+            ]
         ],
-        // 'format'=>'raw',
-        // 'value' => function ($model) {
-        //     return substr($model->CREATED_AT, 0, 10);
-        // },
-    ],
-    [
-        'attribute' => 'HARI',
-        'value' => 'Hari',
-        'headerOptions' => ['style' => 'text-align:center;'],
     ],
 ];
 ?>
@@ -121,7 +109,7 @@ $columns =
         'panel' =>
         [
             'type' => 'default',
-            'heading' => Html::encode($this->title),
+            'heading' => '<i class="fa fa-fw fa-bar-chart-o"></i>'.' '.Html::encode($this->title),
             'before' => Html::a('<i class="fa fa-plus"> Create</i>', ['create'], ['class' => 'btn btn-primary', 'id' => 'createPengeluaran',
             'data-toggle'=>'modal',
             'data-target'=>'#modaluploadpengeluaran',])

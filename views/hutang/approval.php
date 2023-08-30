@@ -66,9 +66,7 @@ $columns =
         [
             'attribute' => 'NOMINAL',
             'headerOptions' => ['style' => 'text-align:center;'],
-            'value' => function ($model) {
-                return number_format($model->NOMINAL,2,',','.');
-            },
+            'format'=>['decimal',2],
             'pageSummary' => true,
         ],
         [

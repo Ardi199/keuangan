@@ -18,7 +18,16 @@ use yii\helpers\Html;
                     [
                         'label' => 'Pengeluaran', 
                         'icon' => 'money',
-                        'url' => ['/rekap/index']
+                        'items' => [
+                            [
+                                'label' => 'Harian',
+                                'url' => ['/rekap/index']
+                            ],
+                            [
+                                'label' => 'Bulanan',
+                                'url' => ['/rekap/index-bulanan']
+                            ]
+                        ]
                     ],
                     [
                         'label' => 'Pemasukan', 
@@ -41,6 +50,12 @@ use yii\helpers\Html;
                             ]
                         ]
                     ],
+                    [
+                        'label' => 'Data Pengguna',
+                        'icon' => 'user',
+                        'visible' => Yii::$app->user->identity->JENIS_USER == '0',
+                        'url' => ['/data-pengguna/index']
+                    ]
                 ],
             ]
         ) ?>

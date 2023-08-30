@@ -12,6 +12,7 @@ use app\models\ContactForm;
 use app\models\Pemasukan;
 use app\models\Rekap;
 use app\models\RekapSearch;
+use sizeg\jwt\Jwt;
 
 class SiteController extends Controller
 {
@@ -96,11 +97,19 @@ class SiteController extends Controller
         $bulananPeng['October'] = Rekap::find()->andWhere(['LIKE', 'TANGGAL', date($searchModel->TANGGAL.'-10')])->sum('NOMINAL');
         $bulananPeng['November'] = Rekap::find()->andWhere(['LIKE', 'TANGGAL', date($searchModel->TANGGAL.'-11')])->sum('NOMINAL');
         $bulananPeng['December'] = Rekap::find()->andWhere(['LIKE', 'TANGGAL', date($searchModel->TANGGAL.'-12')])->sum('NOMINAL');
+
+        $average = Rekap::find()->andWhere(['LIKE','TANGGAL',$searchModel->TANGGAL])->average('NOMINAL');
+        $avgPeng = number_format($average,2,',','.');
+
+        $averagePen = Pemasukan::find()->andWhere(['LIKE','TANGGAL',$searchModel->TANGGAL])->average('NOMINAL');
+        $avgPengPen = number_format($averagePen,2,',','.');
  
         return $this->render('index',[
             'searchModel' => $searchModel,
             'bulananPem' => $bulananPem,
-            'bulananPeng' => $bulananPeng
+            'bulananPeng' => $bulananPeng,
+            'avgPeng' => $avgPeng,
+            'avgPengPen' => $avgPengPen
         ]);
     }
 
