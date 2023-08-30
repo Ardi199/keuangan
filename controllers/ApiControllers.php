@@ -1,30 +1,22 @@
 <?php
 namespace app\controllers;
+
+use yii\web\Controller;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\Response;
 use app\models\Rekap;
+
+\Yii::$app->response->format = Response::FORMAT_JSON;
 
 class ApiController extends \yii\web\Controller
 {
-    public function actionIndex()
-    {
-        $res['value'] = 0;
-        $res['message'] = 'request not found!!!';
-        return $res;
-    }
 
     public function actionRekapIndex()
     {
-        print_r(Yii::$app->request);die;
         if ($request->isPost) {
-            $data = $request->post(); // Menerima data dari POST request
-            
-            // Lakukan validasi data
-            if(isset($data['name']) && isset($data['email'])) {
-
-                
-                return ['message' => 'Data has been successfully created.', 'data' => $data];
-            } else {
-                return ['error' => 'Missing required parameters.'];
-            }
+            $data = Rekap::find()->all();
+            return $data;
         } else {
             return ['error' => 'Invalid request method.'];
         }
