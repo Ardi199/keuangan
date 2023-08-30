@@ -49,7 +49,7 @@ class Hutang extends \yii\db\ActiveRecord
             'BUKTI' => 'Bukti',
             'STATUS' => 'Status',
             'icon' => 'icon',
-            'CREATED_AT' => 'Created At',
+            'CREATED_AT' => 'Created',
             'UPDATED_AT' => 'Updated At',
         ];
     }
