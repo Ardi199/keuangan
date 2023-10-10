@@ -29,7 +29,8 @@ class Rekap extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATED_AT', 'UPDATED_AT','NOMINAL','HARI','TANGGAL'], 'safe'],
+            [['CREATED_AT', 'UPDATED_AT','HARI','TANGGAL'], 'safe'],
+            [['NOMINAL'],'integer'],
             [['KETERANGAN'], 'string', 'max' => 255],
         ];
     }

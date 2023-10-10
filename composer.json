@@ -21,7 +21,7 @@
         "miloschuman/yii2-highcharts-widget": "dev-master",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-grid": "dev-master",
-        "dmstr/yii2-adminlte-asset": "^2.1",
+        "dmstr/yii2-adminlte-asset": "2.1",
         "kartik-v/yii2-widget-activeform": "dev-master",
         "rmrevin/yii2-fontawesome": "~2.9",
         "kartik-v/yii2-widget-fileinput": "dev-master",
@@ -29,7 +29,8 @@
         "kartik-v/yii2-widget-datetimepicker": "dev-master",
         "kartik-v/yii2-editable": "dev-master",
         "sizeg/yii2-jwt": "^1.2",
-        "lcobucci/jwt": "3.2.x-dev"
+        "lcobucci/jwt": "3.2.x-dev",
+        "firebase/php-jwt": "dev-main"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

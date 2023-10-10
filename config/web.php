@@ -52,9 +52,9 @@ $config = [
             ],
         ],
         'jwt' => [
-            'class' => \sizeg\jwt\Jwt::class,
-            'key' => 'SECRET-KEY',  //typically a long random string
-            'jwtValidationData' => \app\components\JwtValidationData::class,
+            'class' => 'firebase\jwt\JWT',
+            'key' => 'asdasda',  //typically a long random string
+            // 'jwtValidationData' => \app\components\JwtValidationData::class,
         ],
     //     'view' => [
     //         'theme' => [
@@ -63,14 +63,13 @@ $config = [
     //             ],
     //         ],
     //    ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
+        // 'urlManager' => [
+        //     'enablePrettyUrl' => true,
+        //     'showScriptName' => false,
+        //     'rules' => array(
+        //         'login' => 'site/login'
+        //      ),
+        // ],
     ],
     'params' => $params,
     'modules' => [
